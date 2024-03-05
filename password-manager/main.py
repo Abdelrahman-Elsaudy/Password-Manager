@@ -10,12 +10,10 @@ letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-file_path = "data.csv"
-
 
 try:
-    data = pandas.read_csv(file_path)
-except:
+    data = pandas.read_csv("data.csv")
+except FileNotFoundError:
     web_list = []
     user_list = []
     passw_list = []
@@ -65,7 +63,7 @@ def adding():
                 "password": passw_list
             }
             new_data = pandas.DataFrame(new_data_dict)
-            new_data.to_csv(file_path)
+            new_data.to_csv("data.csv")
             web_entry.delete(0, END)
             user_entry.delete(0, END)
             pass_entry.delete(0, END)
@@ -77,8 +75,8 @@ def adding():
 def searching():
     the_input = web_entry.get().lower()
     try:
-        data = pandas.read_csv(file_path)
-    except:
+        data = pandas.read_csv("data.csv")
+    except FileNotFoundError:
         messagebox.showerror(title="No Data", message="Your data archive is empty.")
     else:
         password = [row.password for (index, row) in data.iterrows() if row.website == the_input]
